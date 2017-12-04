@@ -16,20 +16,21 @@ import java.awt.event.MouseEvent;
 import java.awt.Font;
 import java.awt.Toolkit;
 
-public class quiz extends JFrame{
-	public hiragana test;
+public class Quiz extends JFrame{
+	public Hiragana test;
 	private JTextField vastaus;
 	String vast;
 	boolean check = false;
 	int index = 0;
 	int laskuri = 1;
 	int oikein = 0;
+	final int AMOUNT = 45;
 	
-	public quiz() {
+	public Quiz() {
 		setBounds(0,0,480,320);
 		setLocationRelativeTo(null);
 		Random randomGenerator = new Random();
-		hiragana test = new hiragana();
+		Hiragana test = new Hiragana();
 		// array from which the quiz fetches the image it needs to display
 		String images[] = {"", "a.png", "e.png", "u.png", "i.png", "o.png", "ka.png", "ke.png", "ku.png", "ki.png", "ko.png", "sa.png", "se.png", "su.png", "shi.png", "so.png", "ta.png", "te.png", "tsu.png", "chi.png", "to.png", "na.png", "ne.png", "nu.png", "ni.png", "no.png", "ha.png", "he.png", "fu.png", "hi.png", "ho.png", "ma.png", "me.png", "mu.png", "mi.png", "mo.png", "ra.png", "re.png", "ru.png", "ri.png", "ro.png", "ya.png", "yo.png", "yu.png", "wa.png", "wo.png"};
 
@@ -72,7 +73,7 @@ public class quiz extends JFrame{
 		btnVastaa.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnVastaa.setBounds(205, 209, 89, 23);
 		getContentPane().add(btnVastaa);
-		btnVastaa.setEnabled(false);
+		btnVastaa.setEnabled(false); // button is not enabled until the quiz has started
 		
 		// label which displays a counter for asked questions
 		JLabel lblLaskuri = new JLabel("Kysymys 0/5");
@@ -98,17 +99,17 @@ public class quiz extends JFrame{
 		btnAloita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				lblLoppu.setText("");
-				btnAloita.setVisible(false);
-				btnVastaa.setEnabled(true);
+				btnAloita.setVisible(false); // hides the start button
+				btnVastaa.setEnabled(true); // enables the answer button
 				if (laskuri > 5)
 					laskuri = 1;
 				oikein = 0;
 				lblLaskuri.setText("Kysymys " + laskuri +"/5");
 				lblTulos.setText("Oikein " + oikein + "/5");
-				index = randomGenerator.nextInt(45) + 1;
-				test.checkindex(index, laskuri);
+				index = randomGenerator.nextInt(AMOUNT) + 1; // randomizes a number which decides what image is shown
+				test.checkIndex(index, laskuri); // sets the number into an array for later checking
 				String image = images[index];
-				lblkana.setIcon(new ImageIcon("src\\images\\" + image));
+				lblkana.setIcon(new ImageIcon("src\\images\\" + image)); //shows the image
 				vastaus.setText("");			
 			}
 		});
@@ -125,21 +126,23 @@ public class quiz extends JFrame{
 				// creates a random number to mark which character to ask next and checks that the same question won't be asked twice
 				if (laskuri <= 5){
 				do {
-					index = randomGenerator.nextInt(45) + 1;	
-				} while(test.checkindex(index, laskuri) == false);
+					index = randomGenerator.nextInt(AMOUNT) + 1;	
+				} while(test.checkIndex(index, laskuri) == false); // the loop continues until checkIndex returns true
 				
 				lblLaskuri.setText("Kysymys " + laskuri +"/5");
 				
 				// sets the image for the question 
 				String image = images[index];
 				lblkana.setIcon(new ImageIcon("src\\images\\" + image));
-				vastaus.setText("");
+				vastaus.setText(""); // clears the textfield
+				vastaus.requestFocusInWindow(); // sets the cursor back to the textfield
 				}
 				else {
 					lblLoppu.setText("Vastasit oikein " + oikein + " kysymykseen!");
-					btnAloita.setVisible(true);
-					btnVastaa.setEnabled(false);
-					lblkana.setText("");
+					btnAloita.setVisible(true); // shows the begin button again
+					btnVastaa.setEnabled(false); 
+					lblkana.setIcon(new ImageIcon());
+					vastaus.setText("");
 				}
 				lblTulos.setText("Oikein " + oikein + "/5");
 			}
@@ -147,7 +150,7 @@ public class quiz extends JFrame{
 	}	
 	
 	public static void main(String[] args) {
-		JFrame frame = new quiz();
+		JFrame frame = new Quiz();
 		frame.setVisible(true);
 	}	
 }
