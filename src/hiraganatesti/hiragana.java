@@ -1,6 +1,5 @@
 package hiraganatesti;
 
-
 public class hiragana {
 
 	String hiraganat[] = {"", "a", "e", "u", "i", "o", "ka", "ke", "ku", "ki", "ko", "sa", "se", "su", "shi", "so", "ta", "te", "tsu", "chi", "to", "na", "ne", "nu", "ni", "no", "ha", "he", "fu", "hi", "ho", "ma", "me", "mu", "mi", "mo", "ra", "re", "ru", "ri", "ro", "ya", "yo", "yu", "wa", "wo"};
@@ -10,8 +9,8 @@ public class hiragana {
 	
 	public hiragana() {
 	}
-
 	
+	// checks whether the answer is correct
 	public boolean check(int index, String vast) {
 		kysymys = hiraganat[index];
 		if (kysymys.equals(vast)) {
@@ -20,9 +19,9 @@ public class hiragana {
 		else
 			return false;		
 	}
+	// makes sure that the same question isn't asked twice
 	public boolean checkindex(int index, int laskuri) {
 		jatka = true;
-		
 		for (int i = 0; i < indexit.length; i++) {
 			if (indexit[i] == index)
 				jatka = false;
