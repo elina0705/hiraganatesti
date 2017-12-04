@@ -9,3 +9,5 @@ The GUI is in Finnish, however it is quite irrelevant in this application. Press
 
 At the end the amount of correct answers is shown. <br>
 <img src="ss3.jpg">
+
+
